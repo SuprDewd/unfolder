@@ -1,4 +1,4 @@
-*Unfolder* is an automated tool for discovering hidden files and directories
+**Unfolder** is an automated tool for discovering hidden files and directories
 hosted on HTTP servers. Given a base URL and a dictionary, it scans the HTTP
 server for URLs that return non-404 status codes.
 
