@@ -1,3 +1,5 @@
+#include "config.h"
+
 #include <iostream>
 #include <vector>
 #include <cstdio>
@@ -14,10 +16,14 @@
 
 #include <sys/socket.h>
 #include <netdb.h>
-#include <error.h>
 #include <unistd.h>
 #include <arpa/inet.h>
-// #include <cfile>
+
+#if HAVE_MACH_ERROR_H
+#include <mach/error.h>
+#else
+#include <error.h>
+#endif
 
 using namespace std;
 

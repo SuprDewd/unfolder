@@ -6,6 +6,8 @@ AC_CONFIG_FILES([
     Makefile
 ])
 
+AM_CONFIG_HEADER([config.h])
+
 AC_CHECK_LIB(pthread, pthread_create)
 AC_CHECK_FUNCS([gethostbyname])
 AC_CHECK_FUNCS([socket])
@@ -14,6 +16,8 @@ AC_CHECK_HEADERS([arpa/inet.h])
 AC_CHECK_HEADERS([netdb.h])
 AC_CHECK_HEADERS([sys/socket.h])
 AC_CHECK_HEADERS([unistd.h])
+AC_CHECK_HEADERS([error.h])
+AC_CHECK_HEADERS([mach/error.h])
 AC_CHECK_HEADER_STDBOOL
 AC_TYPE_SIZE_T
 
