@@ -251,12 +251,9 @@ void thread_runner(int id, string base_url, PathDict *paths) {
             }
         }
 
-        if (content_length >= 0) {
+        if (content_length >= 0 && !do_close) {
             while (content_length > 0) NEXT(), content_length--;
         } else {
-            do_close = true;
-        }
-        if (do_close) {
             close(sock);
             sock = -1;
         }
