@@ -59,7 +59,7 @@ public:
             }
         }
         if (!protocol_ok) {
-            fatal("unsupported protocol for url \"%s\"", url);
+            fatal("unsupported protocol for url \"%s\"", url.c_str());
         }
         if (url.back() != '/') {
             url += "/";
