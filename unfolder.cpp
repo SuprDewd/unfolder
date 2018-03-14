@@ -220,6 +220,7 @@ void thread_runner(int id, string base_url, PathDict *paths) {
         while (NEXT() != '\n');
 
         if (code != 404) {
+            lock_guard<mutex> lock(print_mut);
             cout << code << " http://" << domain << base_url << path << endl;
         }
 
