@@ -169,7 +169,7 @@ public:
 // public:
 // };
 
-// mutex print_mut;
+mutex print_mut;
 void thread_runner(int id, string base_url, PathDict *paths) {
     assert(base_url.substr(0, string("http://").size()) == "http://");
     base_url = base_url.substr(string("http://").size());
@@ -182,14 +182,10 @@ void thread_runner(int id, string base_url, PathDict *paths) {
     addr.sin_port = htons(80);
     addr.sin_addr.s_addr = *(unsigned long*)res->h_addr;
 
-    int sock = socket(AF_INET, SOCK_STREAM, 0);
-    if (connect(sock, (struct sockaddr*)&addr, sizeof(addr)) < 0) {
-        fatal("%s\n", strerror(errno));
-    }
-
     char buf[BUFSIZ];
     int bufat = 0,
-        bufcnt = 0;
+        bufcnt = 0,
+        sock = -1;
 
 #define ASSURE (bufat < bufcnt ? 0 : (bufcnt = read(sock, buf, BUFSIZ), bufat = 0))
 #define NEXT() (ASSURE, buf[bufat++])
@@ -197,8 +193,17 @@ void thread_runner(int id, string base_url, PathDict *paths) {
 
     string path;
     while (paths->get(path)) {
-        // lock_guard<mutex> lock(print_mut);
-        // cout << id << " " << base_url << path << endl;
+        if (sock < 0) {
+            sock = socket(AF_INET, SOCK_STREAM, 0);
+            if (connect(sock, (struct sockaddr*)&addr, sizeof(addr)) < 0) {
+                fatal("%s\n", strerror(errno));
+            }
+        }
+
+        // {
+        //     lock_guard<mutex> lock(print_mut);
+        //     cout << id << " " << base_url << path << endl;
+        // }
 
         stringstream ss;
         ss << "GET " << base_url;
@@ -227,6 +232,7 @@ void thread_runner(int id, string base_url, PathDict *paths) {
         }
 
         int content_length = -1;
+        bool do_close = false;
         while (true) {
 
             if (PEEK() == '\r' || PEEK() == '\n') {
@@ -250,6 +256,8 @@ void thread_runner(int id, string base_url, PathDict *paths) {
 
             if (key.str() == "Content-Length") {
                 content_length = atoi(value.str().c_str());
+            } else if (key.str() == "Connection" && value.str() == "close") {
+                do_close = true;
             }
 
             // cout << "Line: ";
@@ -260,7 +268,12 @@ void thread_runner(int id, string base_url, PathDict *paths) {
             // NEXT();
         }
 
-        while (content_length > 0) NEXT(), content_length--;
+        if (content_length >= 0) {
+            while (content_length > 0) NEXT(), content_length--;
+        } else {
+            // fatal("no Content-Length in response\n");
+            do_close = true;
+        }
         // cout << endl;
 
         // while (true) {
@@ -275,9 +288,17 @@ void thread_runner(int id, string base_url, PathDict *paths) {
         // cout << endl;
 
         // cout << "bye" << endl;
+
+        if (do_close) {
+            close(sock);
+            sock = -1;
+        }
     }
 
-    close(sock);
+    if (sock >= 0) {
+        close(sock);
+        sock = -1;
+    }
 }
 
 int main(int argc, char *argv[]) {
