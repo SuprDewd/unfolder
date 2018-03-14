@@ -1,6 +1,6 @@
 
 AC_INIT([unfolder], [0.1], [suprdewd@gmail.com])
-AM_INIT_AUTOMAKE([subdir-objects -Wall -Werror foreign])
+AM_INIT_AUTOMAKE([subdir-objects foreign])
 AC_PROG_CXX
 AC_CONFIG_FILES([
     Makefile
@@ -16,7 +16,6 @@ AC_CHECK_HEADERS([sys/socket.h])
 AC_CHECK_HEADERS([unistd.h])
 AC_CHECK_HEADER_STDBOOL
 AC_TYPE_SIZE_T
-
 
 AC_OUTPUT
 
