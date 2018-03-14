@@ -30,6 +30,8 @@ unfolder -u http://example.com/base_url/ -d dict1.txt -d dict2.txt
 #### TODO
 - Support HTTPS connections
 - Recover when server closes connection unexpectedly
+- Use HTTP HEAD instead of HTTP GET
+  - Fall back on HTTP GET when HEAD is unsupported
 - Interactive CLI
     - Ability to add new base URLs and dictionaries at run-time
 
