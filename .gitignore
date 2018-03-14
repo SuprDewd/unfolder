@@ -1,5 +1,9 @@
+unfolder
+*.o
+
 # http://www.gnu.org/software/automake
 
+Makefile
 Makefile.in
 /ar-lib
 /mdate-sh
@@ -17,6 +21,8 @@ Makefile.in
 /config.guess
 /config.h.in
 /config.sub
+/config.log
+/config.status
 /configure
 /configure.scan
 /depcomp
@@ -40,3 +46,5 @@ m4/ltsugar.m4
 m4/ltversion.m4
 m4/lt~obsolete.m4
 autom4te.cache
+
+.deps
