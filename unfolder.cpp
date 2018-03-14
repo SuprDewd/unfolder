@@ -189,6 +189,8 @@ void thread_runner(int id, string base_url, PathDict *paths) {
 
     string path;
     while (paths->get(path)) {
+        bufat = bufcnt = 0;
+
         if (sock < 0) {
             sock = socket(AF_INET, SOCK_STREAM, 0);
             if (connect(sock, (struct sockaddr*)&addr, sizeof(addr)) < 0) {
