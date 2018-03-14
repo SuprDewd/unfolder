@@ -1,5 +1,7 @@
 unfolder
 *.o
+config.h
+*~
 
 # http://www.gnu.org/software/automake
 
