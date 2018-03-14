@@ -248,6 +248,7 @@ void thread_runner(int id, string base_url, PathDict *paths) {
                 content_length = atoi(value.str().c_str());
             } else if (key.str() == "Connection" && value.str() == "close") {
                 do_close = true;
+                break;
             }
         }
 
