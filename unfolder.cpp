@@ -165,16 +165,6 @@ public:
     }
 };
 
-// class Connection {
-// private:
-// public:
-// };
-//
-// class Request {
-// private:
-// public:
-// };
-
 mutex print_mut;
 void thread_runner(int id, string base_url, PathDict *paths) {
     assert(base_url.substr(0, string("http://").size()) == "http://");
@@ -206,11 +196,6 @@ void thread_runner(int id, string base_url, PathDict *paths) {
             }
         }
 
-        // {
-        //     lock_guard<mutex> lock(print_mut);
-        //     cout << id << " " << base_url << path << endl;
-        // }
-
         stringstream ss;
         ss << "GET " << base_url;
         for (size_t i = 0; i < path.size(); i++) {
@@ -223,7 +208,6 @@ void thread_runner(int id, string base_url, PathDict *paths) {
         ss << " HTTP/1.1\r\nHost: " << domain << "\r\nConnection: keep-alive\r\n\r\n";
 
         string msg = ss.str();
-        // cout << "''" << msg << "''" << endl;
         write(sock, msg.c_str(), msg.size());
 
         while (NEXT() != ' ');
@@ -242,7 +226,6 @@ void thread_runner(int id, string base_url, PathDict *paths) {
         while (true) {
 
             if (PEEK() == '\r' || PEEK() == '\n') {
-                // cout << "Here" << endl;
                 while (NEXT() != '\n');
                 break;
             }
@@ -258,43 +241,18 @@ void thread_runner(int id, string base_url, PathDict *paths) {
             }
             while (NEXT() != '\n');
 
-            // cout << "'" << key.str() << "'='" << value.str() << "'" << endl;
-
             if (key.str() == "Content-Length") {
                 content_length = atoi(value.str().c_str());
             } else if (key.str() == "Connection" && value.str() == "close") {
                 do_close = true;
             }
-
-            // cout << "Line: ";
-            // while (PEEK() != '\n') {
-            //     cout << NEXT();
-            // }
-            // cout << endl;
-            // NEXT();
         }
 
         if (content_length >= 0) {
             while (content_length > 0) NEXT(), content_length--;
         } else {
-            // fatal("no Content-Length in response\n");
             do_close = true;
         }
-        // cout << endl;
-
-        // while (true) {
-        //     char c = NEXT();
-        //     cout << c;
-        // }
-
-        // int cnt = read(sock, buf, BUFSIZE);
-        // for (int i = 0; i < cnt; i++) {
-        //     cout << buf[i];
-        // }
-        // cout << endl;
-
-        // cout << "bye" << endl;
-
         if (do_close) {
             close(sock);
             sock = -1;
