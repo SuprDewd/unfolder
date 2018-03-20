@@ -21,6 +21,7 @@ sudo make install
 Choose one or more of the following dictionaries of common file and directory names:
 - https://github.com/danielmiessler/SecLists
 - https://github.com/v0re/dirb/tree/master/wordlists
+- https://www.netsparker.com/blog/web-security/svn-digger-better-lists-for-forced-browsing/
 
 Run unfolder as follows:
 ~~~ bash
