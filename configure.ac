@@ -1,5 +1,5 @@
 
-AC_INIT([unfolder], [0.1], [suprdewd@gmail.com])
+AC_INIT([unfolder], [0.2], [suprdewd@gmail.com])
 AM_INIT_AUTOMAKE([subdir-objects foreign])
 AC_PROG_CXX
 AC_CONFIG_FILES([

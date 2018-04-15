@@ -1,7 +1,9 @@
-unfolder
+/unfolder
+/unfolder-client
 *.o
 config.h
 *~
+.dirstamp
 
 # http://www.gnu.org/software/automake
 
