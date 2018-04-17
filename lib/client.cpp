@@ -61,6 +61,12 @@ void Client::work() {
 
     {
         auto lock = this->server_io->get_write_lock();
+        this->server_io->write_string("work_done");
+        this->server_io->write_long(count);
+    }
+
+    {
+        auto lock = this->server_io->get_write_lock();
         this->server_io->write_string("available");
     }
 }
@@ -71,7 +77,7 @@ void Client::run() {
         this->worker_threads = get_nprocs(); // Default to number of processors (probably suboptimal)
     }
 
-    this->server_io->write_int(worker_threads);
+    this->server_io->write_int(this->worker_threads);
 
     // TODO: Spawn worker threads?
     {
@@ -93,7 +99,9 @@ void Client::run() {
         else if (cmd == "add_edge") this->add_edge();
         else if (cmd == "set_start") this->set_start();
         else if (cmd == "next_phase") this->next_phase();
-        else if (cmd == "work") this->work();
+        else if (cmd == "work") {
+            this->work();
+        }
         else assert(false);
     }
 }

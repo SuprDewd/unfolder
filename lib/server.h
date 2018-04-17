@@ -1,6 +1,7 @@
 #ifndef UNFOLDER_SERVER_H
 #define UNFOLDER_SERVER_H
 
+class Server;
 #include "dag.h"
 #include "machine.h"
 #include "machine_list.h"
@@ -8,6 +9,7 @@
 #include <vector>
 #include <string>
 #include <thread>
+#include <atomic>
 
 class Server {
 private:
@@ -20,6 +22,8 @@ private:
 
     std::thread *scheduler_thread;
 
+    std::atomic<long long> current_done;
+    long long current_count;
     void scheduler();
 
 public:
@@ -37,6 +41,10 @@ public:
     void start();
     void stop();
     void wait_for_clients();
+
+    void response_available(Machine *machine);
+    void response_found(Machine *machine, const std::string &resource);
+    void response_work_done(Machine *machine, long long amount);
 };
 
 #endif

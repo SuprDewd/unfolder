@@ -1,6 +1,8 @@
 #include "dag.h"
+#include "connection.h"
+using namespace std;
 
-SetBaseUrl::SetBaseUrl(bool https, std::string host, std::string path) {
+SetBaseUrl::SetBaseUrl(bool https, string host, string path) {
     this->https = https;
     this->host = host;
     this->path = path;
@@ -32,7 +34,7 @@ void SetBaseUrl::backward(State *state) const {
     // TODO: Close connection?
 }
 
-AppendPath::AppendPath(std::string append) {
+AppendPath::AppendPath(string append) {
     this->append = append;
 }
 
@@ -59,14 +61,22 @@ PerformRequest::PerformRequest(IO *io, int w) {
 bool PerformRequest::forward(State *state) const {
     usleep(w * 1000);
 
-    std::stringstream ss;
+    stringstream ss;
     for (size_t i = 0; i < state->path.size(); i++) {
         ss << state->path[i];
     }
 
-    auto lock = this->io->get_write_lock();
-    this->io->write_string("response");
-    this->io->write_string(std::string(state->https ? "https://" : "http://") + state->host + ss.str());
+    int code = get_status_code(state->https, state->host, ss.str());
+    if (code != 404) {
+        this->io->write_string("response");
+        stringstream st;
+        st << code << " " << (state->https ? "https://" : "http://") + state->host + ss.str();
+        this->io->write_string(st.str());
+    }
+
+    // auto lock = this->io->get_write_lock();
+    // this->io->write_string("response");
+    // this->io->write_string(string(state->https ? "https://" : "http://") + state->host + ss.str());
     return true;
 }
 

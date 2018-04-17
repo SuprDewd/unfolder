@@ -1,0 +1,3 @@
+[submodule "libaddict/examples/SecLists"]
+	path = libaddict/examples/SecLists
+	url = https://github.com/danielmiessler/SecLists.git

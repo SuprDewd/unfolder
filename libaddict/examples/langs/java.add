@@ -1,0 +1,10 @@
+# Java
+CommonBackdoors-JSP.fuzz.txt
+JavaServlets-Common.fuzz.txt
+JBoss.fuzz.txt
+jboss.txt
+JRun.fuzz.txt
+jrun.txt
+axis.txt
+SVNDigger/cat/Language/jar.txt
+SVNDigger/cat/Language/jsp.txt

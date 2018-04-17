@@ -8,7 +8,12 @@ AC_CONFIG_FILES([
 
 AM_CONFIG_HEADER([config.h])
 
-AC_CHECK_LIB(pthread, pthread_create)
+AC_CHECK_LIB([pthread], [pthread_create])
+AC_CHECK_LIB([crypto], [BIO_new])
+AC_CHECK_LIB([ssl], [SSL_CTX_new])
+AC_CHECK_HEADERS([openssl/ssl.h])
+AC_CHECK_HEADERS([openssl/bio.h])
+
 AC_CHECK_FUNCS([gethostbyname])
 AC_CHECK_FUNCS([socket])
 AC_CHECK_FUNCS([strerror])

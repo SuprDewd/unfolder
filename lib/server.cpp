@@ -1,4 +1,31 @@
 #include "server.h"
+#include <mutex>
+using namespace std;
+
+const long long BATCH = 20; // Number of jobs to send to each client at a time. TODO: Make this dynamic.
+
+const int PROGRESS_WIDTH = 60;
+
+mutex print_mut;
+
+void clear_progress() {
+    lock_guard<mutex> lock(print_mut);
+    cerr << "\x1B[1K\x1B[1F\x1B[1E";
+}
+
+void print_progress(long long done, long long total) {
+    lock_guard<mutex> lock(print_mut);
+
+    cerr << "[";
+    for (int i = 0; i < PROGRESS_WIDTH; i++) {
+        if (i < PROGRESS_WIDTH * done / total) {
+            cerr << "#";
+        } else {
+            cerr << " ";
+        }
+    }
+    cerr << "] " << done << "/" << total;
+}
 
 void Server::scheduler() {
 
@@ -18,12 +45,16 @@ void Server::scheduler() {
             break; // TODO: Don't do this in interactive mode
         }
 
+        this->current_count = count;
+        this->current_done = 0;
+        print_progress(this->current_done, this->current_count);
+
         while (current < count) {
             // TODO: Wait for machine to become available (some kind of scheduler, with list of available machines, using a semaphore)
             Machine *m = this->available_machines->get();
 
             // TODO: Send fixed (or dynamic) number of jobs to this machine, and mark it as unavailable
-            long long send = std::min(1LL, count - current);
+            long long send = min(BATCH, count - current);
 
             {
                 auto lock = m->io->get_write_lock();
@@ -38,6 +69,8 @@ void Server::scheduler() {
         // wait until all machines are available
         for (size_t i = 0; i < this->machines.size(); i++) this->available_machines->get();
         for (size_t i = 0; i < this->machines.size(); i++) this->available_machines->make_available(this->machines[i]);
+
+        clear_progress();
     }
 }
 
@@ -49,8 +82,8 @@ Server::Server() {
     this->scheduler_thread = NULL;
 }
 
-void Server::add_client(std::string connection_string) {
-    this->machines.push_back(new Machine(connection_string, this->dag, this->available_machines));
+void Server::add_client(string connection_string) {
+    this->machines.push_back(new Machine(connection_string, this->dag, this));
 }
 
 void Server::connect_to_clients() {
@@ -94,7 +127,7 @@ void Server::add_edge(size_t vertex_from, size_t vertex_to) {
         this->machines[i]->io->write_int(-1);
     }
 }
-void Server::add_edge_SetBaseUrl(size_t vertex_from, size_t vertex_to, bool https, std::string host, std::string path) {
+void Server::add_edge_SetBaseUrl(size_t vertex_from, size_t vertex_to, bool https, string host, string path) {
     for (size_t i = 0; i < this->machines.size(); i++) {
         auto lock = this->machines[i]->io->get_write_lock();
         this->machines[i]->io->write_string("add_edge");
@@ -106,7 +139,7 @@ void Server::add_edge_SetBaseUrl(size_t vertex_from, size_t vertex_to, bool http
         this->machines[i]->io->write_string(path);
     }
 }
-void Server::add_edge_AppendPath(size_t vertex_from, size_t vertex_to, std::string append) {
+void Server::add_edge_AppendPath(size_t vertex_from, size_t vertex_to, string append) {
     for (size_t i = 0; i < this->machines.size(); i++) {
         auto lock = this->machines[i]->io->get_write_lock();
         this->machines[i]->io->write_string("add_edge");
@@ -135,7 +168,7 @@ void Server::run_clients() {
 }
 
 void Server::start() {
-    this->scheduler_thread = new std::thread(&Server::scheduler, this);
+    this->scheduler_thread = new thread(&Server::scheduler, this);
 }
 
 void Server::stop() {
@@ -152,5 +185,24 @@ void Server::wait_for_clients() {
     for (size_t i = 0; i < this->machines.size(); i++) {
         this->machines[i]->join();
     }
+}
+
+void Server::response_available(Machine *machine) {
+    this->available_machines->make_available(machine);
+}
+
+void Server::response_found(Machine *machine, const string &response) {
+    clear_progress();
+    {
+        lock_guard<mutex> lock(print_mut);
+        cout << response << endl;
+    }
+    print_progress(this->current_done, this->current_count);
+}
+
+void Server::response_work_done(Machine *machine, long long amount) {
+    clear_progress();
+    this->current_done += amount;
+    print_progress(this->current_done, this->current_count);
 }
 

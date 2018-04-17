@@ -14,7 +14,7 @@
 #include <sys/wait.h>
 
 class Machine;
-#include "machine_list.h"
+#include "server.h"
 
 class Machine {
 private:
@@ -27,14 +27,14 @@ private:
     dDAG<State> *local_dag;
     bool _is_local;
 
-    MachineList *available_machines;
+    Server *server;
 
     void listen();
 
 public:
     IO *io;
 
-    Machine(std::string connection_string, dDAG<State> *local_dag, MachineList *available_machines);
+    Machine(std::string connection_string, dDAG<State> *local_dag, Server *server);
     std::string get_host();
     bool is_local();
     void run_client(int stdin_fd, int stdout_fd);

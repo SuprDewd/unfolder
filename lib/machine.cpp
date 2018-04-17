@@ -7,9 +7,11 @@ void Machine::listen() {
             std::cout << "bye from " << host << std::endl;
             break;
         } else if (cmd == "response") {
-            std::cout << "[" << this->host << "] " << this->io->read_string() << std::endl;
+            this->server->response_found(this, this->io->read_string());
         } else if (cmd == "available") {
-            this->available_machines->make_available(this);
+            this->server->response_available(this);
+        } else if (cmd == "work_done") {
+            this->server->response_work_done(this, this->io->read_long());
         } else {
             assert(false);
         }
@@ -18,13 +20,13 @@ void Machine::listen() {
     this->io->close_fds();
 }
 
-Machine::Machine(std::string connection_string, dDAG<State> *local_dag, MachineList* available_machines) {
+Machine::Machine(std::string connection_string, dDAG<State> *local_dag, Server* server) {
     this->threads = -1;
     this->listener_thread = NULL;
     this->client_thread = NULL;
     this->child = -1;
     this->local_dag = local_dag;
-    this->available_machines = available_machines;
+    this->server = server;
     this->io = NULL;
 
     size_t at = 0;

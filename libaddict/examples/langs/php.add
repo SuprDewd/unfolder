@@ -1,0 +1,12 @@
+# PHP
+[../SecLists/Discovery/Web-Content/CommonBackdoors-PHP.fuzz.txt]
+[../SecLists/Discovery/Web-Content/Common-PHP-Filenames.txt]
+[../SecLists/Discovery/Web-Content/PHP.fuzz.txt]
+[../SecLists/Discovery/Web-Content/SVNDigger/cat/Language/php3.txt]
+[../SecLists/Discovery/Web-Content/SVNDigger/cat/Language/php5.txt]
+[../SecLists/Discovery/Web-Content/SVNDigger/cat/Language/phpt.txt]
+[../SecLists/Discovery/Web-Content/SVNDigger/cat/Language/php.txt]
+
+[../names.add].php
+[../names.add].phps
+

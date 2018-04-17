@@ -1,0 +1,29 @@
+# Directory and file names
+
+# TODO: Apply name() to each of these files:
+
+#[SecLists/Discovery/Web-Content/big.txt] # TODO: Verbatim
+[SecLists/Discovery/Web-Content/common-api-endpoints-mazen160.txt]
+[SecLists/Discovery/Web-Content/Common-PHP-Filenames.txt]
+[SecLists/Discovery/Web-Content/common.txt]
+[SecLists/Discovery/Web-Content/netware.txt]
+[SecLists/Discovery/Web-Content/Passwords.fuzz.txt]
+[SecLists/Discovery/Web-Content/burp-parameter-names.txt]
+#[SecLists/Discovery/Web-Content/KitchensinkDirectories.fuzz.txt] # TODO: Verbatim
+[SecLists/Discovery/Web-Content/Logins.fuzz.txt]
+[SecLists/Discovery/Web-Content/netware.txt]
+[SecLists/Discovery/Web-Content/Randomfiles.fuzz.txt]
+[SecLists/Discovery/Web-Content/SVNDigger/context/admin.txt]
+[SecLists/Discovery/Web-Content/SVNDigger/context/debug.txt]
+[SecLists/Discovery/Web-Content/SVNDigger/context/error.txt]
+#[SecLists/Discovery/Web-Content/SVNDigger/context/help.txt] # TODO: Verbatim
+#[SecLists/Discovery/Web-Content/SVNDigger/context/index.txt] # TODO: Verbatim
+#[SecLists/Discovery/Web-Content/SVNDigger/context/install.txt] # TODO: Verbatim
+#[SecLists/Discovery/Web-Content/SVNDigger/context/log.txt] # TODO: Verbatim
+[SecLists/Discovery/Web-Content/SVNDigger/context/readme.txt]
+[SecLists/Discovery/Web-Content/SVNDigger/context/root.txt]
+[SecLists/Discovery/Web-Content/SVNDigger/context/setup.txt]
+[SecLists/Discovery/Web-Content/SVNDigger/context/test.txt]
+[SecLists/Discovery/Web-Content/tests.txt]
+#[SecLists/Discovery/Web-Content/Vignette.fuzz.txt] # TODO: Verbatim
+#[SecLists/Discovery/Web-Content/vignette.txt] # TODO: Verbatim

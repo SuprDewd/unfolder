@@ -1,0 +1,16 @@
+# Misc
+[SecLists/Discovery/Web-Content/Passwords.fuzz.txt]
+[SecLists/Discovery/Web-Content/Common-DB-Backups.txt]
+[SecLists/Discovery/Web-Content/proxy-conf.fuzz.txt]
+[SecLists/Discovery/Web-Content/Logins.fuzz.txt]
+#[SecLists/Discovery/Web-Content/quickhits.txt] # TODO: Verbatim (Weird char: cidr.txt)
+[SecLists/Discovery/Web-Content/Randomfiles.fuzz.txt]
+#[SecLists/Discovery/Web-Content/RobotsDisallowed-Top1000.txt] # TODO: Verbatim (UTF-8)
+[SecLists/Discovery/Web-Content/RobotsDisallowed-Top100.txt]
+[SecLists/Discovery/Web-Content/RobotsDisallowed-Top10.txt]
+#[SecLists/Discovery/Web-Content/RobotsDisallowed-Top500.txt] # TODO: Verbatim (UTF-8)
+[SecLists/Discovery/Web-Content/SVNDigger/cat/Database/sql.txt]
+[SecLists/Discovery/Web-Content/SVNDigger/cat/Database/xml.txt]
+[SecLists/Discovery/Web-Content/SVNDigger/cat/Database/ini.txt]
+[SecLists/Discovery/Web-Content/SVNDigger/cat/Language/sh.txt]
+[SecLists/Discovery/Web-Content/UnixDotfiles.fuzz.txt]

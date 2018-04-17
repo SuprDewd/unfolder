@@ -1,0 +1,5 @@
+# Apache
+[../SecLists/Discovery/Web-Content/Apache.fuzz.txt]
+[../SecLists/Discovery/Web-Content/apache.txt]
+[../SecLists/Discovery/Web-Content/ApacheTomcat.fuzz.txt]
+[../SecLists/Discovery/Web-Content/tomcat.txt]

@@ -1,0 +1,38 @@
+# Remove stars
+# Remove leading /
+# Remove trailing /
+# Remove duplicate /
+# Possibly remove extension (everything after first dot, not including dot at beginning)
+# What about query strings?
+
+# raft-large-directories.txt # 62k
+# raft-large-extensions.txt # 2k
+# raft-large-files.txt # 37k
+# raft-large-words.txt # 120k
+
+# raft-medium-directories.txt # 30k
+# raft-medium-extensions.txt # 1k
+# raft-medium-files.txt # 17k
+# raft-medium-words.txt # 63k
+
+# raft-small-directories.txt # 20k
+# raft-small-extensions.txt # 1k
+# raft-small-files.txt # 11k
+# raft-small-words.txt # 43k
+
+# SVNDigger/all-dirs.txt
+# SVNDigger/all-extensionless.txt
+# SVNDigger/all.txt
+# SVNDigger/cat
+# SVNDigger/context
+# SVNDigger/Licence.txt
+# SVNDigger/ReadMe.txt
+# URLs
+
+# web-extensions.txt
+# web-mutations.txt
+
+# Web-Services
+# Websphere.fuzz.txt
+# websphere.txt
+

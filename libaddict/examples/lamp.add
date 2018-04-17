@@ -1,0 +1,5 @@
+# A standard LAMP setup
+[os/linux.add]
+[langs/php.add]
+[servers/apache.add]
+[misc.add]
